@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maison Sucrée | Premium Dessert Atelier</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FBF8F3;
+      --bg-warm: #FFF8ED;
+      --fg: #2D1F1A;
+      --fg-muted: #6B5750;
+      --accent: #E8C4A8;
+      --accent-deep: #D4A88A;
+      --metallic: #B76E79;
+      --metallic-light: #D4929C;
+      --gold: #C9A962;
+      --gold-light: #E5D4A1;
+      --card: #FFFFFF;
+      --border: rgba(183, 110, 121, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    .font-display {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--metallic);
+      border-radius: 4px;
+    }
+
+    .gold-glow {
+      box-shadow: 0 0 0 0 rgba(201, 169, 98, 0);
+      transition: box-shadow 0.4s ease, transform 0.3s ease;
+    }
+    .gold-glow:hover {
+      box-shadow: 0 0 30px 5px rgba(201, 169, 98, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--metallic) 0%, var(--metallic-light) 100%);
+      color: white;
+      padding: 14px 32px;
+      border: none;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-size: 12px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.6s ease;
+    }
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 8px 32px rgba(183, 110, 121, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--fg);
+      padding: 14px 32px;
+      border: 1px solid var(--metallic);
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-secondary:hover {
+      background: var(--metallic);
+      color: white;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in-left {
+      opacity: 0;
+      transform: translateX(-60px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .fade-in-right {
+      opacity: 0;
+      transform: translateX(60px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .stagger-children > * {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .stagger-children.visible > *:nth-child(1) { transition-delay: 0.1s; }
+    .stagger-children.visible > *:nth-child(2) { transition-delay: 0.2s; }
+    .stagger-children.visible > *:nth-child(3) { transition-delay: 0.3s; }
+    .stagger-children.visible > *:nth-child(4) { transition-delay: 0.4s; }
+    .stagger-children.visible > *:nth-child(5) { transition-delay: 0.5s; }
+    .stagger-children.visible > *:nth-child(6) { transition-delay: 0.6s; }
+    .stagger-children.visible > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-card:hover {
+      border-color: var(--metallic);
+      box-shadow: 0 20px 60px rgba(183, 110, 121, 0.15);
+    }
+    .product-card .quick-view {
+      opacity: 0;
+      transform: scale(0.9);
+      transition: all 0.3s ease;
+    }
+    .product-card:hover .quick-view {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .product-card .product-image {
+      transition: transform 0.6s ease;
+    }
+    .product-card:hover .product-image {
+      transform: scale(1.05);
+    }
+
+    .limited-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      color: var(--fg);
+      padding: 6px 14px;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      z-index: 10;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      transition: all 0.4s ease;
+    }
+    header.scrolled {
+      background: rgba(251, 248, 243, 0.98);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 2px 30px rgba(45, 31, 26, 0.08);
+    }
+
+    .nav-link {
+      position: relative;
+      color: var(--fg);
+      text-decoration: none;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--metallic);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg);
+      z-index: 999;
+      transform: translateX(-100%);
+      transition: transform 0.4s ease;
+    }
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+
+    .mini-cart {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 400px;
+      height: 100vh;
+      background: var(--card);
+      box-shadow: -10px 0 60px rgba(0,0,0,0.1);
+      z-index: 2000;
+      transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .mini-cart.open {
+      right: 0;
+    }
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(45, 31, 26, 0.4);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+      z-index: 1999;
+    }
+    .cart-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .vip-popup {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+    }
+    .vip-popup.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .vip-popup .popup-bg {
+      position: absolute;
+      inset: 0;
+      background: rgba(45, 31, 26, 0.6);
+    }
+    .vip-popup .popup-content {
+      position: relative;
+      background: var(--card);
+      max-width: 500px;
+      width: 90%;
+      padding: 48px;
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .vip-popup.open .popup-content {
+      transform: scale(1) translateY(0);
+    }
+
+    .tab-btn {
+      padding: 12px 28px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--fg-muted);
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .tab-btn:hover {
+      color: var(--metallic);
+    }
+    .tab-btn.active {
+      border-color: var(--metallic);
+      color: var(--metallic);
+    }
+
+    .calendar-day {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+    .calendar-day:hover:not(.disabled) {
+      border-color: var(--metallic);
+      background: rgba(183, 110, 121, 0.05);
+    }
+    .calendar-day.selected {
+      background: var(--metallic);
+      color: white;
+    }
+    .calendar-day.disabled {
+      color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .toggle-switch {
+      width: 56px;
+      height: 28px;
+      background: #e0d8d4;
+      border-radius: 14px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .toggle-switch.active {
+      background: var(--metallic);
+    }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      background: white;
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      transition: left 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .toggle-switch.active::after {
+      left: 31px;
+    }
+
+    .scarcity-ticker {
+      background: linear-gradient(90deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-light) 100%);
+      background-size: 200% 100%;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .masonry-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .masonry-item:nth-child(1) { grid-row: span 2; }
+    .masonry-item:nth-child(4) { grid-row: span 2; }
+
+    .look-popup {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .masonry-item:hover .look-popup {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .gold-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .hero-image-container {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-image-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, rgba(232, 196, 168, 0.3) 0%, rgba(212, 168, 138, 0.2) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .img-cover {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .masonry-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .masonry-item:nth-child(1),
+      .masonry-item:nth-child(4) {
+        grid-row: span 1;
+      }
+      .mini-cart {
+        width: 100%;
+        right: -100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Scarcity Ticker -->
+  <div class="scarcity-ticker py-2 text-center">
+    <p class="text-sm font-medium" style="color: var(--fg);">Only <span id="scarcity-count">3</span> 'Peach Cream Blossoms' remaining for today's bake</p>
+  </div>
+
+  <!-- Header -->
+  <header id="header">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+      <a href="#hero" class="font-display text-2xl md:text-3xl font-semibold tracking-wide" style="color: var(--fg);">
+        Maison Sucrée
+      </a>
+      
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-10">
+        <a href="#hero" class="nav-link text-sm tracking-widest uppercase">Home</a>
+        <a href="#about" class="nav-link text-sm tracking-widest uppercase">Our Story</a>
+        <a href="#menu" class="nav-link text-sm tracking-widest uppercase">Shop</a>
+        <a href="#gallery" class="nav-link text-sm tracking-widest uppercase">Gallery</a>
+        <a href="#contact" class="nav-link text-sm tracking-widest uppercase">Contact</a>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <button onclick="openCart()" class="flex items-center gap-2 text-sm tracking-widest uppercase gold-glow px-4 py-2 border border-[var(--metallic)]" aria-label="Open shopping bag">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span>Bag (<span id="cart-count">0</span>)</span>
+        </button>
+        
+        <!-- Mobile Menu Button -->
+        <button onclick="toggleMobileMenu()" class="md:hidden w-10 h-10 flex items-center justify-center" aria-label="Toggle menu">
+          <svg id="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="flex flex-col h-full">
+      <div class="p-6 border-b border-[var(--border)] flex items-center justify-between">
+        <span class="font-display text-2xl font-semibold" style="color: var(--fg);">Maison Sucrée</span>
+        <button onclick="toggleMobileMenu()" class="w-10 h-10 flex items-center justify-center" aria-label="Close menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <nav class="flex-1 flex flex-col justify-center px-8">
+        <a href="#hero" onclick="toggleMobileMenu()" class="font-display text-4xl py-4 border-b border-[var(--border)]" style="color: var(--fg);">Home</a>
+        <a href="#about" onclick="toggleMobileMenu()" class="font-display text-4xl py-4 border-b border-[var(--border)]" style="color: var(--fg);">Our Story</a>
+        <a href="#menu" onclick="toggleMobileMenu()" class="font-display text-4xl py-4 border-b border-[var(--border)]" style="color: var(--fg);">Shop</a>
+        <a href="#gallery" onclick="toggleMobileMenu()" class="font-display text-4xl py-4 border-b border-[var(--border)]" style="color: var(--fg);">Gallery</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="font-display text-4xl py-4" style="color: var(--fg);">Contact</a>
+      </nav>
+      <div class="p-8">
+        <p class="text-sm" style="color: var(--fg-muted);">Follow us</p>
+        <div class="flex gap-4 mt-4">
+          <a href="#" class="w-10 h-10 rounded-full border border-[var(--metallic)] flex items-center justify-center" style="color: var(--metallic);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="2" width="20" height="20" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+            </svg>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full border border-[var(--metallic)] flex items-center justify-center" style="color: var(--metallic);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section id="hero" class="relative min-h-screen flex items-center overflow-hidden pt-16">
+    <div class="absolute inset-0">
+      <div class="absolute inset-0 bg-gradient-to-br from-[var(--bg)] via-[var(--bg-warm)] to-[var(--accent)]"></div>
+      <div class="absolute top-20 left-10 w-64 h-64 rounded-full opacity-30" style="background: radial-gradient(circle, var(--gold-light) 0%, transparent 70%); animation: float 8s ease-in-out infinite;"></div>
+      <div class="absolute bottom-20 right-20 w-96 h-96 rounded-full opacity-20" style="background: radial-gradient(circle, var(--metallic-light) 0%, transparent 70%); animation: float 10s ease-in-out infinite reverse;"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-6 py-20 md:py-32 flex flex-col md:flex-row items-center gap-12">
+      <div class="flex-1 text-center md:text-left">
+        <p class="fade-in text-sm tracking-[0.3em] uppercase mb-6" style="color: var(--metallic);">Premium Dessert Atelier</p>
+        <h1 class="fade-in font-display text-5xl md:text-7xl lg:text-8xl font-light leading-tight mb-8" style="color: var(--fg);">
+          Crafting Sweet Moments,<br>
+          <span class="italic font-semibold" style="color: var(--metallic);">One Bite at a Time.</span>
+        </h1>
+        <p class="fade-in text-lg md:text-xl mb-10 max-w-lg" style="color: var(--fg-muted);">
+          Artisanal desserts crafted with the finest ingredients, delivered to your doorstep in perfect condition.
+        </p>
+        <div class="fade-in flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+          <a href="#menu" class="btn-primary gold-glow">Explore The Collection</a>
+          <a href="#about" class="btn-secondary">Our Private Atelier</a>
+        </div>
+      </div>
+
+      <!-- Hero Image -->
+      <div class="flex-1 relative">
+        <div class="fade-in-right relative">
+          <div class="hero-image-container w-80 h-80 md:w-[450px] md:h-[450px] mx-auto rounded-full overflow-hidden shadow-2xl">
+            <img 
+              src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&h=600&fit=crop&q=80" 
+              alt="Exquisite layered cake with fresh berries and cream"
+              class="img-cover"
+            >
+          </div>
+          <div class="absolute -top-4 -right-4 w-16 h-16 rounded-full flex items-center justify-center" style="background: var(--gold-light); animation: float 3s ease-in-out infinite;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="var(--metallic)">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+          <div class="absolute -bottom-2 -left-4 w-14 h-14 rounded-full flex items-center justify-center" style="background: var(--accent); animation: float 4s ease-in-out infinite;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--metallic)">
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce" style="animation-duration: 2s;">
+      <span class="text-xs tracking-widest uppercase" style="color: var(--fg-muted);">Scroll</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--metallic);">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-24 md:py-32 relative overflow-hidden">
+    <div class="absolute top-0 left-0 right-0 gold-line"></div>
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div class="fade-in-left">
+          <div class="relative">
+            <div class="aspect-[4/5] overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1556217477-d325251ece38?w=600&h=750&fit=crop&q=80" 
+                alt="Pastry chef crafting dessert in the atelier"
+                class="img-cover"
+              >
+            </div>
+            <div class="absolute -bottom-6 -right-6 w-48 h-48 border border-[var(--gold)]"></div>
+          </div>
+        </div>
+        <div class="fade-in-right">
+          <p class="text-sm tracking-[0.3em] uppercase mb-4" style="color: var(--metallic);">Our Story</p>
+          <h2 class="font-display text-4xl md:text-5xl font-light mb-6" style="color: var(--fg);">A Private Atelier of Sweet Excellence</h2>
+          <div class="space-y-4 text-lg" style="color: var(--fg-muted);">
+            <p>Founded in the heart of Bangkok, Maison Sucrée began as a private kitchen crafting bespoke desserts for discerning clientele who sought something beyond the ordinary.</p>
+            <p>Every creation that leaves our atelier is a testament to our philosophy: luxury lies in the details. We source only the finest Valrhona chocolate, Madagascar vanilla, and seasonal fruits from local artisan farms.</p>
+            <p>Our master pastry chefs bring decades of experience from Michelin-starred kitchens, ensuring each bite delivers an unforgettable experience.</p>
+          </div>
+          <div class="mt-10 flex gap-12">
+            <div>
+              <p class="font-display text-4xl font-semibold" style="color: var(--metallic);">15K+</p>
+              <p class="text-sm tracking-widest uppercase mt-1" style="color: var(--fg-muted);">Happy Clients</p>
+            </div>
+            <div>
+              <p class="font-display text-4xl font-semibold" style="color: var(--metallic);">50+</p>
+              <p class="text-sm tracking-widest uppercase mt-1" style="color: var(--fg-muted);">Signature Recipes</p>
+            </div>
+            <div>
+              <p class="font-display text-4xl font-semibold" style="color: var(--metallic);">100%</p>
+              <p class="text-sm tracking-widest uppercase mt-1" style="color: var(--fg-muted);">Fresh Daily</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section id="menu" class="py-24 md:py-32 relative" style="background: var(--bg-warm);">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16 fade-in">
+        <p class="text-sm tracking-[0.3em] uppercase mb-4" style="color: var(--metallic);">The Boutique</p>
+        <h2 class="font-display text-4xl md:text-5xl font-light mb-6" style="color: var(--fg);">Our Curated Collection</h2>
+        <p class="text-lg max-w-2xl mx-auto" style="color: var(--fg-muted);">Each creation is handcrafted with precision and passion, using only the finest ingredients sourced from around the world.</p>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-2 mb-12 fade-in">
+        <button class="tab-btn active" data-tab="cakes" onclick="switchTab('cakes')">Signature Cakes</button>
+        <button class="tab-btn" data-tab="cookies" onclick="switchTab('cookies')">Handcrafted Cookies</button>
+        <button class="tab-btn" data-tab="drinks" onclick="switchTab('drinks')">Artisan Drinks</button>
+      </div>
+
+      <div id="products-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-children">
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="py-24 md:py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16 fade-in">
+        <p class="text-sm tracking-[0.3em] uppercase mb-4" style="color: var(--metallic);">Social Gallery</p>
+        <h2 class="font-display text-4xl md:text-5xl font-light mb-6" style="color: var(--fg);">Sweet Moments Shared</h2>
+        <p class="text-lg max-w-2xl mx-auto" style="color: var(--fg-muted);">Follow our journey and share your moments with #MaisonSucre</p>
+      </div>
+
+      <div id="gallery-grid" class="masonry-grid fade-in">
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-24 md:py-32 relative" style="background: var(--bg-warm);">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-16">
+        <div class="fade-in-left">
+          <p class="text-sm tracking-[0.3em] uppercase mb-4" style="color: var(--metallic);">Visit Us</p>
+          <h2 class="font-display text-4xl md:text-5xl font-light mb-8" style="color: var(--fg);">Our Flagship Boutique</h2>
+          <div class="space-y-6">
+            <div>
+              <h4 class="font-semibold mb-2" style="color: var(--fg);">Address</h4>
+              <p style="color: var(--fg-muted);">123 Sukhumvit Road, Thonglor District<br>Bangkok 10110, Thailand</p>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-2" style="color: var(--fg);">Hours</h4>
+              <p style="color: var(--fg-muted);">Monday - Sunday: 10:00 AM - 8:00 PM<br>Last order at 7:30 PM</p>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-2" style="color: var(--fg);">Contact</h4>
+              <p style="color: var(--fg-muted);">+66 2 123 4567<br>contact@maisonsucre.com</p>
+            </div>
+          </div>
+        </div>
+        <div class="fade-in-right">
+          <div class="aspect-square overflow-hidden">
+            <img 
+              src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=600&h=600&fit=crop&q=80" 
+              alt="Interior of Maison Sucrée boutique"
+              class="img-cover"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-16 border-t border-[var(--border)]">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-12 mb-12">
+        <div>
+          <h3 class="font-display text-2xl font-semibold mb-4" style="color: var(--fg);">Maison Sucrée</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--fg-muted);">Crafting sweet moments since 2019. Every dessert tells a story of passion and precision.</p>
+        </div>
+        <div>
+          <h4 class="text-sm tracking-widest uppercase mb-4" style="color: var(--metallic);">Shop</h4>
+          <ul class="space-y-2 text-sm" style="color: var(--fg-muted);">
+            <li><a href="#menu" class="hover:text-[var(--metallic)] transition-colors">Signature Cakes</a></li>
+            <li><a href="#menu" class="hover:text-[var(--metallic)] transition-colors">Handcrafted Cookies</a></li>
+            <li><a href="#menu" class="hover:text-[var(--metallic)] transition-colors">Artisan Drinks</a></li>
+            <li><a href="#contact" class="hover:text-[var(--metallic)] transition-colors">Gift Sets</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-sm tracking-widest uppercase mb-4" style="color: var(--metallic);">Support</h4>
+          <ul class="space-y-2 text-sm" style="color: var(--fg-muted);">
+            <li><a href="#contact" class="hover:text-[var(--metallic)] transition-colors">Customer Care</a></li>
+            <li><a href="#" class="hover:text-[var(--metallic)] transition-colors">Track Order</a></li>
+            <li><a href="#" class="hover:text-[var(--metallic)] transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-[var(--metallic)] transition-colors">Wholesale & Events</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-sm tracking-widest uppercase mb-4" style="color: var(--metallic);">Connect</h4>
+          <div class="flex gap-4">
+            <a href="#" class="w-10 h-10 rounded-full border border-[var(--metallic)] flex items-center justify-center hover:bg-[var(--metallic)] hover:text-white transition-all" style="color: var(--metallic);" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="18" cy="6" r="1" fill="currentColor"/>
+              </svg>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full border border-[var(--metallic)] flex items-center justify-center hover:bg-[var(--metallic)] hover:text-white transition-all" style="color: var(--metallic);" aria-label="TikTok">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
+              </svg>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full border border-[var(--metallic)] flex items-center justify-center hover:bg-[var(--metallic)] hover:text-white transition-all" style="color: var(--metallic);" aria-label="Line">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 5.58 2 10c0 2.15 1.09 4.1 2.87 5.55-.18.65-.64 2.35-.73 2.72-.11.45.16.44.34.32.14-.1 2.25-1.49 3.16-2.1.75.14 1.53.21 2.36.21 5.52 0 10-3.58 10-8S17.52 2 12 2z"/>
+              </svg>
+            </a>
+          </div>
+          <p class="text-sm mt-4" style="color: var(--fg-muted);">contact@maisonsucre.com</p>
+          <p class="text-sm" style="color: var(--fg-muted);">+66 2 123 4567</p>
+        </div>
+      </div>
+      <div class="pt-8 border-t border-[var(--border)] text-center">
+        <p class="text-sm" style="color: var(--fg-muted);">© 2024 Maison Sucrée. All rights reserved. Crafted with love in Bangkok.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mini Cart -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <aside class="mini-cart" id="mini-cart">
+    <div class="h-full flex flex-col">
+      <div class="p-6 border-b border-[var(--border)] flex items-center justify-between">
+        <h3 class="font-display text-2xl" style="color: var(--fg);">Your Box</h3>
+        <button onclick="closeCart()" class="w-10 h-10 flex items-center justify-center hover:bg-[var(--accent)] transition-colors rounded-full" aria-label="Close cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <div id="cart-items" class="flex-1 overflow-y-auto p-6">
+      </div>
+
+      <div id="checkout-section" class="border-t border-[var(--border)] p-6 hidden">
+        <div class="mb-6">
+          <p class="text-sm tracking-widest uppercase mb-4" style="color: var(--metallic);">Select Delivery Date</p>
+          <div class="grid grid-cols-7 gap-1 text-center text-xs mb-2" style="color: var(--fg-muted);">
+            <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+          </div>
+          <div id="calendar-grid" class="grid grid-cols-7 gap-1">
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-sm" style="color: var(--fg);">Send as a Gift?</span>
+            <div class="toggle-switch" id="gift-toggle" onclick="toggleGift()"></div>
+          </div>
+          <div id="gift-message" class="hidden">
+            <textarea class="w-full p-3 border border-[var(--border)] text-sm resize-none focus:border-[var(--metallic)] focus:outline-none transition-colors" rows="3" placeholder="Write your handwritten note here..."></textarea>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-lg" style="color: var(--fg);">Total</span>
+          <span class="font-display text-2xl" style="color: var(--metallic);" id="cart-total">฿0</span>
+        </div>
+
+        <button class="btn-primary w-full gold-glow mb-3">Secure Checkout</button>
+        <button onclick="closeCart()" class="btn-secondary w-full">Continue Shopping</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- VIP Popup -->
+  <div class="vip-popup" id="vip-popup">
+    <div class="popup-bg" onclick="closeVipPopup()"></div>
+    <div class="popup-content text-center">
+      <button onclick="closeVipPopup()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center hover:bg-[var(--accent)] transition-colors rounded-full" aria-label="Close popup">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--fg)" stroke-width="1.5">
+          <path d="M12 2L15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z"/>
+        </svg>
+      </div>
+      <h3 class="font-display text-3xl mb-3" style="color: var(--fg);">Join Our Private Circle</h3>
+      <p class="mb-6" style="color: var(--fg-muted);">Be the first to know about new creations, exclusive events, and receive 10% off your first order.</p>
+      <form onsubmit="handleVipSubmit(event)">
+        <input type="email" placeholder="Enter your email" required class="w-full p-4 mb-4 border border-[var(--border)] text-center focus:border-[var(--metallic)] focus:outline-none transition-colors" style="background: var(--bg);">
+        <button type="submit" class="btn-primary w-full gold-glow">Join the Circle</button>
+      </form>
+      <p class="text-xs mt-4" style="color: var(--fg-muted);">We respect your privacy. Unsubscribe anytime.</p>
+    </div>
+  </div>
+
+  <!-- Product Quick View Modal -->
+  <div class="vip-popup" id="product-modal">
+    <div class="popup-bg" onclick="closeProductModal()"></div>
+    <div class="popup-content max-w-2xl">
+      <button onclick="closeProductModal()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center hover:bg-[var(--accent)] transition-colors rounded-full" aria-label="Close modal">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <div id="modal-content" class="grid md:grid-cols-2 gap-8">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============ DATA ============
+    const products = {
+      cakes: [
+        { id: 1, name: 'Peach Cream Blossom', price: 890, image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&h=400&fit=crop&q=80', description: 'Layers of vanilla sponge, fresh peach compote, and light cream cheese frosting.', limited: true, tag: 'Best Seller' },
+        { id: 2, name: 'Rose Lychee Elegance', price: 1250, image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=400&fit=crop&q=80', description: 'Delicate rose-scented mousse with lychee pearls on a biscuit base.', limited: false, tag: 'New' },
+        { id: 3, name: 'Chocolate Truffle Dome', price: 980, image: 'https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?w=400&h=400&fit=crop&q=80', description: 'Valrhona dark chocolate ganache with a salted caramel core.', limited: false, tag: 'Signature' },
+        { id: 4, name: 'Matcha Zen Garden', price: 1100, image: 'https://images.unsplash.com/photo-1582716401301-b2407dc7563d?w=400&h=400&fit=crop&q=80', description: 'Ceremonial matcha mousse with adzuki bean layers.', limited: true, tag: 'Limited' },
+        { id: 5, name: 'Strawberry Cloud', price: 820, image: 'https://images.unsplash.com/photo-1567171466295-4afa63d45416?w=400&h=400&fit=crop&q=80', description: 'Light-as-air chiffon cake with fresh strawberries.', limited: false, tag: 'Popular' },
+        { id: 6, name: 'Mango Coconut Paradise', price: 950, image: 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=400&h=400&fit=crop&q=80', description: 'Tropical mango mousse with coconut crumble base.', limited: false, tag: 'Seasonal' },
+      ],
+      cookies: [
+        { id: 7, name: 'Salted Caramel Crinkle', price: 280, image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&h=400&fit=crop&q=80', description: 'Chewy caramel-filled cookies with Himalayan salt flakes.', limited: false, tag: 'Best Seller' },
+        { id: 8, name: 'Earl Grey Lavender', price: 260, image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&h=400&fit=crop&q=80', description: 'Buttery cookies infused with Earl Grey and dried lavender.', limited: false, tag: 'Elegant' },
+        { id: 9, name: 'Double Chocolate Indulgence', price: 290, image: 'https://images.unsplash.com/photo-1606525437679-037aca74a1a9?w=400&h=400&fit=crop&q=80', description: 'Dark and white chocolate chunks in a fudgy base.', limited: false, tag: 'Rich' },
+        { id: 10, name: 'Pistachio Rose', price: 320, image: 'https://images.unsplash.com/photo-1548848221-0c2e497ed557?w=400&h=400&fit=crop&q=80', description: 'Ground pistachios with rosewater glaze.', limited: true, tag: 'Limited' },
+      ],
+      drinks: [
+        { id: 11, name: 'Rose Gold Latte', price: 180, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=400&fit=crop&q=80', description: 'Oat milk latte with rose syrup and edible gold dust.', limited: false, tag: 'Signature' },
+        { id: 12, name: 'Matcha Ceremonial', price: 160, image: 'https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=400&h=400&fit=crop&q=80', description: 'Premium Uji matcha whisked to perfection.', limited: false, tag: 'Classic' },
+        { id: 13, name: 'White Peach Oolong', price: 150, image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=400&fit=crop&q=80', description: 'Cold-brewed oolong with white peach essence.', limited: false, tag: 'Refreshing' },
+        { id: 14, name: 'Hojicha Parfait', price: 220, image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=400&h=400&fit=crop&q=80', description: 'Roasted green tea blended with vanilla ice cream.', limited: true, tag: 'Limited' },
+      ]
+    };
+
+    const galleryImages = [
+      { id: 1, src: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&h=800&fit=crop&q=80', product: 'Peach Cream Blossom', alt: 'Customer enjoying dessert' },
+      { id: 2, src: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&h=500&fit=crop&q=80', product: 'Rose Lychee Elegance', alt: 'Beautiful cake display' },
+      { id: 3, src: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500&h=500&fit=crop&q=80', product: 'Matcha Zen Garden', alt: 'Tea time setup' },
+      { id: 4, src: 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=600&h=800&fit=crop&q=80', product: 'Mango Coconut Paradise', alt: 'Dessert plating' },
+      { id: 5, src: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&h=500&fit=crop&q=80', product: 'Salted Caramel Crinkle', alt: 'Cookie box gift' },
+      { id: 6, src: 'https://images.unsplash.com/photo-1512568400610-62da28bc8a13?w=500&h=500&fit=crop&q=80', product: 'Rose Gold Latte', alt: 'Cafe atmosphere' },
+    ];
+
+    // ============ STATE ============
+    let cart = [];
+    let selectedDate = null;
+    let isGift = false;
+    let currentTab = 'cakes';
+    let mobileMenuOpen = false;
+
+    // ============ INITIALIZATION ============
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProducts('cakes');
+      renderGallery();
+      renderCalendar();
+      setupScrollObserver();
+      setupHeaderScroll();
+      setupActiveNavLinks();
+      
+      setTimeout(() => {
+        if (!localStorage.getItem('vipDismissed')) {
+          openVipPopup();
+        }
+      }, 3000);
+
+      setInterval(() => {
+        const count = Math.floor(Math.random() * 3) + 1;
+        const el = document.getElementById('scarcity-count');
+        if (el) el.textContent = count;
+      }, 30000);
+    });
+
+    // ============ ACTIVE NAV LINKS ============
+    function setupActiveNavLinks() {
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop - 200;
+          if (window.scrollY >= sectionTop) {
+            current = section.getAttribute('id');
+          }
+        });
+        
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+          }
+        });
+      });
+    }
+
+    // ============ MOBILE MENU ============
+    function toggleMobileMenu() {
+      mobileMenuOpen = !mobileMenuOpen;
+      const menu = document.getElementById('mobile-menu');
+      const icon = document.getElementById('menu-icon');
+      
+      if (mobileMenuOpen) {
+        menu.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        icon.innerHTML = '<path d="M18 6L6 18M6 6l12 12"/>';
+      } else {
+        menu.classList.remove('open');
+        document.body.style.overflow = '';
+        icon.innerHTML = '<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>';
+      }
+    }
+
+    // ============ SCROLL OBSERVER ============
+    function setupScrollObserver() {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .stagger-children').forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    // ============ HEADER SCROLL ============
+    function setupHeaderScroll() {
+      const header = document.getElementById('header');
+      
+      window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        if (currentScroll > 100) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+    }
+
+    // ============ RENDER PRODUCTS ============
+    function renderProducts(category) {
+      const grid = document.getElementById('products-grid');
+      const items = products[category];
+      
+      grid.innerHTML = items.map(product => `
+        <article class="product-card group">
+          ${product.limited ? '<span class="limited-badge">Limited Edition</span>' : ''}
+          <div class="relative overflow-hidden aspect-square cursor-pointer" onclick="openProductModal(${product.id}, '${category}')">
+            <img 
+              src="${product.image}" 
+              alt="${product.name}"
+              class="product-image img-cover"
+              loading="lazy"
+            >
+            <div class="quick-view absolute inset-0 bg-black/40 flex items-center justify-center">
+              <span class="bg-white px-4 py-2 text-xs tracking-widest uppercase" style="color: var(--fg);">Quick View</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <span class="text-xs tracking-widest uppercase" style="color: var(--metallic);">${product.tag}</span>
+            <h3 class="font-display text-xl mb-2" style="color: var(--fg);">${product.name}</h3>
+            <p class="text-sm mb-4 line-clamp-2" style="color: var(--fg-muted);">${product.description}</p>
+            <div class="flex items-center justify-between">
+              <span class="font-display text-xl" style="color: var(--metallic);">฿${product.price.toLocaleString()}</span>
+              <button onclick="addToCart(${product.id}, '${category}')" class="btn-secondary text-xs px-4 py-2 gold-glow">Add to Box</button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+
+      setTimeout(() => {
+        grid.classList.add('visible');
+      }, 100);
+    }
+
+    // ============ TAB SWITCHING ============
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tab);
+      });
+      
+      const grid = document.getElementById('products-grid');
+      grid.classList.remove('visible');
+      
+      setTimeout(() => {
+        renderProducts(tab);
+      }, 300);
+    }
+
+    // ============ CART FUNCTIONS ============
+    function addToCart(productId, category) {
+      const product = products[category].find(p => p.id === productId);
+      if (!product) return;
+
+      const existingItem = cart.find(item => item.id === productId);
+      if (existingItem) {
+        existingItem.quantity++;
+      } else {
+        cart.push({ ...product, quantity: 1 });
+      }
+
+      updateCartUI();
+      openCart();
+    }
+
+    function removeFromCart(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      updateCartUI();
+    }
+
+    function updateQuantity(productId, delta) {
+      const item = cart.find(i => i.id === productId);
+      if (item) {
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+          removeFromCart(productId);
+        } else {
+          updateCartUI();
+        }
+      }
+    }
+
+    function updateCartUI() {
+      const cartCount = document.getElementById('cart-count');
+      const cartItems = document.getElementById('cart-items');
+      const checkoutSection = document.getElementById('checkout-section');
+      const cartTotal = document.getElementById('cart-total');
+
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = totalItems;
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = `
+          <div class="text-center py-12">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style="background: var(--accent);">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--fg-muted)" stroke-width="1.5">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 01-8 0"/>
+              </svg>
+            </div>
+            <p class="font-display text-xl mb-2" style="color: var(--fg);">Your box is empty</p>
+            <p class="text-sm" style="color: var(--fg-muted);">Add some delicious treats to get started.</p>
+          </div>
+        `;
+        checkoutSection.classList.add('hidden');
+      } else {
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        
+        cartItems.innerHTML = cart.map(item => `
+          <div class="flex gap-4 mb-6 pb-6 border-b border-[var(--border)]">
+            <div class="w-20 h-20 flex-shrink-0 overflow-hidden">
+              <img src="${item.image}" alt="${item.name}" class="img-cover">
+            </div>
+            <div class="flex-1">
+              <h4 class="font-display text-lg" style="color: var(--fg);">${item.name}</h4>
+              <p class="text-sm mb-2" style="color: var(--metallic);">฿${item.price.toLocaleString()}</p>
+              <div class="flex items-center gap-3">
+                <button onclick="updateQuantity(${item.id}, -1)" class="w-7 h-7 border border-[var(--border)] flex items-center justify-center hover:border-[var(--metallic)] transition-colors" aria-label="Decrease quantity">-</button>
+                <span class="text-sm">${item.quantity}</span>
+                <button onclick="updateQuantity(${item.id}, 1)" class="w-7 h-7 border border-[var(--border)] flex items-center justify-center hover:border-[var(--metallic)] transition-colors" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+            <button onclick="removeFromCart(${item.id})" class="text-sm hover:text-[var(--metallic)] transition-colors" aria-label="Remove item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M18 6L6 18M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        `).join('');
+
+        cartTotal.textContent = `฿${total.toLocaleString()}`;
+        checkoutSection.classList.remove('hidden');
+      }
+    }
+
+    function openCart() {
+      document.getElementById('mini-cart').classList.add('open');
+      document.getElementById('cart-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCart() {
+      document.getElementById('mini-cart').classList.remove('open');
+      document.getElementById('cart-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // ============ CALENDAR ============
+    function renderCalendar() {
+      const grid = document.getElementById('calendar-grid');
+      const today = new Date();
+      const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+      const firstDay = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
+
+      let html = '';
+      
+      for (let i = 0; i < firstDay; i++) {
+        html += '<div class="calendar-day disabled"></div>';
+      }
+      
+      for (let day = 1; day <= daysInMonth; day++) {
+        const isPast = day < today.getDate();
+        const classes = `calendar-day ${isPast ? 'disabled' : ''} ${selectedDate === day ? 'selected' : ''}`;
+        html += `<div class="${classes}" ${!isPast ? `onclick="selectDate(${day})"` : ''}>${day}</div>`;
+      }
+
+      grid.innerHTML = html;
+    }
+
+    function selectDate(day) {
+      selectedDate = day;
+      renderCalendar();
+    }
+
+    // ============ GIFT TOGGLE ============
+    function toggleGift() {
+      isGift = !isGift;
+      const toggle = document.getElementById('gift-toggle');
+      const messageBox = document.getElementById('gift-message');
+      
+      toggle.classList.toggle('active', isGift);
+      messageBox.classList.toggle('hidden', !isGift);
+    }
+
+    // ============ GALLERY ============
+    function renderGallery() {
+      const grid = document.getElementById('gallery-grid');
+      
+      grid.innerHTML = galleryImages.map((img, i) => `
+        <div class="masonry-item relative overflow-hidden cursor-pointer group" style="aspect-ratio: ${i === 0 || i === 3 ? '3/4' : '1/1'};">
+          <img 
+            src="${img.src}" 
+            alt="${img.alt}"
+            class="img-cover"
+            loading="lazy"
+          >
+          <div class="look-popup">
+            <p class="font-display text-lg mb-2 text-center px-4" style="color: var(--fg);">${img.product}</p>
+            <button onclick="quickAddFromGallery('${img.product}')" class="btn-primary text-xs px-4 py-2">Shop This Treat</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function quickAddFromGallery(productName) {
+      for (const category of Object.keys(products)) {
+        const product = products[category].find(p => p.name === productName);
+        if (product) {
+          addToCart(product.id, category);
+          return;
+        }
+      }
+    }
+
+    // ============ MODALS ============
+    function openProductModal(productId, category) {
+      const product = products[category].find(p => p.id === productId);
+      if (!product) return;
+
+      const modalContent = document.getElementById('modal-content');
+      modalContent.innerHTML = `
+        <div class="aspect-square overflow-hidden">
+          <img src="${product.image}" alt="${product.name}" class="img-cover">
+        </div>
+        <div class="flex flex-col justify-center">
+          ${product.limited ? '<span class="text-xs tracking-widest uppercase mb-2" style="color: var(--gold);">Limited Edition</span>' : ''}
+          <span class="text-xs tracking-widest uppercase mb-2" style="color: var(--metallic);">${product.tag}</span>
+          <h3 class="font-display text-3xl mb-4" style="color: var(--fg);">${product.name}</h3>
+          <p class="mb-6" style="color: var(--fg-muted);">${product.description}</p>
+          <p class="font-display text-3xl mb-6" style="color: var(--metallic);">฿${product.price.toLocaleString()}</p>
+          <button onclick="addToCart(${product.id}, '${category}'); closeProductModal();" class="btn-primary gold-glow">Add to Box</button>
+        </div>
+      `;
+
+      document.getElementById('product-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProductModal() {
+      document.getElementById('product-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function openVipPopup() {
+      document.getElementById('vip-popup').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeVipPopup() {
+      document.getElementById('vip-popup').classList.remove('open');
+      document.body.style.overflow = '';
+      localStorage.setItem('vipDismissed', 'true');
+    }
+
+    function handleVipSubmit(e) {
+      e.preventDefault();
+      closeVipPopup();
+      alert('Welcome to the Private Circle! Check your email for your 10% discount code.');
+    }
+
+    // ============ FLOAT ANIMATION ============
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
